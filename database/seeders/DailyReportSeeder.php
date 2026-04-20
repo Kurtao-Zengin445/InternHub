@@ -65,6 +65,12 @@ class DailyReportSeeder extends Seeder
             while ($current->lte($end)) {
                 // Lewati hari Sabtu dan Minggu
                 if (!$current->isWeekend()) {
+                    // Skip today's date to allow manual testing
+                    if ($current->isToday()) {
+                        $current->addDay();
+                        continue;
+                    }
+
                     $actIdx  = $reportIndex % count($activities);
                     $probIdx = $reportIndex % count($problems);
                     $solIdx  = $reportIndex % count($solutions);

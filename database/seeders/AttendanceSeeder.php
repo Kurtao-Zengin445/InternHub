@@ -23,6 +23,12 @@ class AttendanceSeeder extends Seeder
 
             while ($current->lte($end)) {
                 if (!$current->isWeekend()) {
+                    // Skip today's date to allow manual testing
+                    if ($current->isToday()) {
+                        $current->addDay();
+                        continue;
+                    }
+
                     // Simulasi kehadiran realistis:
                     // ~88% hadir, ~5% sakit, ~5% izin, ~2% alpha
                     $rand = rand(1, 100);

@@ -104,23 +104,12 @@ class StudentFeaturesSeeder extends Seeder
                     ]
                 );
 
-                // 🔹 ATTENDANCE
-                Attendance::where('internship_id', $internship->id)->delete();
-
-                foreach (Carbon::now()->subDays(7)->daysUntil(now()) as $date) {
-                    Attendance::create([
-                        'internship_id' => $internship->id,
-                        'attendance_date' => $date->format('Y-m-d'),
-                        'check_in' => '08:00:00',
-                        'check_out' => '16:00:00',
-                        'status' => 'present',
-                    ]);
-                }
-
                 // 🔹 DAILY REPORT
                 DailyReport::where('internship_id', $internship->id)->delete();
 
                 foreach (Carbon::now()->subDays(3)->daysUntil(now()) as $date) {
+                    if ($date->isToday()) continue;
+
                     DailyReport::create([
                         'internship_id' => $internship->id,
                         'report_date' => $date->format('Y-m-d'),
