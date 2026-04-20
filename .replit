@@ -1,0 +1,13 @@
+[config]
+run = "php artisan serve --host=0.0.0.0 --port=${PORT:-8080}"
+
+[deployment]
+run = [{method = \"php artisan serve --host=0.0.0.0 --port=$PORT\", start = true}]
+
+[build]
+# Install deps & build assets
+run = "composer install --no-dev --optimize-autoloader --no-interaction && npm ci --only=production && npm run build"
+
+[env]
+PHP_VERSION = "8.3"
+NODE_VERSION = "20"
